@@ -448,87 +448,87 @@ private fun HtmlListItem(
     val isRtl = isRtlText(item.text())
     val layoutDir = if (isRtl) androidx.compose.ui.unit.LayoutDirection.Rtl else androidx.compose.ui.unit.LayoutDirection.Ltr
     androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides layoutDir) {
-
-    HtmlStyledElement(element = item) {
-        Column {
-            Row(
-                verticalAlignment = Alignment.Top,
-                modifier = Modifier.padding(vertical = 2.dp),
-            ) {
-                if (isTaskItem && checkboxInput != null) {
-                    // Checkbox indicator
-                    Surface(
-                        shape = RoundedCornerShape(2.dp),
-                        color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                        modifier = Modifier.padding(end = 4.dp, top = 2.dp),
-                    ) {
-                        Box(
-                            modifier = Modifier
-                                .padding(2.dp)
-                                .size(LocalTextStyle.current.fontSize.toDp() * 0.8f),
-                            contentAlignment = Alignment.Center,
+        HtmlStyledElement(element = item) {
+            Column {
+                Row(
+                    verticalAlignment = Alignment.Top,
+                    modifier = Modifier.padding(vertical = 2.dp),
+                ) {
+                    if (isTaskItem && checkboxInput != null) {
+                        // Checkbox indicator
+                        Surface(
+                            shape = RoundedCornerShape(2.dp),
+                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                            modifier = Modifier.padding(end = 4.dp, top = 2.dp),
                         ) {
-                            if (isChecked) {
-                                Icon(
-                                    imageVector = HugeIcons.Tick01,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary,
-                                )
+                            Box(
+                                modifier = Modifier
+                                    .padding(2.dp)
+                                    .size(LocalTextStyle.current.fontSize.toDp() * 0.8f),
+                                contentAlignment = Alignment.Center,
+                            ) {
+                                if (isChecked) {
+                                    Icon(
+                                        imageVector = HugeIcons.Tick01,
+                                        contentDescription = null,
+                                        tint = MaterialTheme.colorScheme.primary,
+                                    )
+                                }
                             }
                         }
+                    } else {
+                        Text(
+                            text = bulletText,
+                            color = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.alignByBaseline(),
+                        )
                     }
-                } else {
-                    Text(
-                        text = bulletText,
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.alignByBaseline(),
-                    )
-                }
 
-                // Item inline content (excluding nested lists and the checkbox input)
-                Column(modifier = Modifier.weight(1f)) {
-                    val directContentNodes = item.childNodes().filter { node ->
-                        !(node is Element &&
-                            (node.tagName().lowercase() in listOf("ul", "ol") ||
-                                (node.tagName().lowercase() == "input" && node.attr("type") == "checkbox")))
-                    }
-                    // Group consecutive inline nodes and render as a single paragraph
-                    val groups = mutableListOf<MutableList<Node>>()
-                    directContentNodes.fastForEach { node ->
-                        if (node is Element && node.tagName().lowercase() == "p") {
-                            groups.add(mutableListOf(node))
-                        } else {
-                            val last = groups.lastOrNull()
-                            if (last != null && last.none {
-                                    it is Element && it.tagName().lowercase() == "p"
-                                }) {
-                                last.add(node)
-                            } else {
+                    // Item inline content (excluding nested lists and the checkbox input)
+                    Column(modifier = Modifier.weight(1f)) {
+                        val directContentNodes = item.childNodes().filter { node ->
+                            !(node is Element &&
+                                (node.tagName().lowercase() in listOf("ul", "ol") ||
+                                    (node.tagName().lowercase() == "input" && node.attr("type") == "checkbox")))
+                        }
+                        // Group consecutive inline nodes and render as a single paragraph
+                        val groups = mutableListOf<MutableList<Node>>()
+                        directContentNodes.fastForEach { node ->
+                            if (node is Element && node.tagName().lowercase() == "p") {
                                 groups.add(mutableListOf(node))
+                            } else {
+                                val last = groups.lastOrNull()
+                                if (last != null && last.none {
+                                        it is Element && it.tagName().lowercase() == "p"
+                                    }) {
+                                    last.add(node)
+                                } else {
+                                    groups.add(mutableListOf(node))
+                                }
+                            }
+                        }
+                        groups.fastForEach { group ->
+                            val first = group.firstOrNull()
+                            if (first is Element && first.tagName().lowercase() == "p") {
+                                HtmlParagraph(element = first, onClickCitation = onClickCitation)
+                            } else {
+                                HtmlInlineGroup(nodes = group, onClickCitation = onClickCitation)
                             }
                         }
                     }
-                    groups.fastForEach { group ->
-                        val first = group.firstOrNull()
-                        if (first is Element && first.tagName().lowercase() == "p") {
-                            HtmlParagraph(element = first, onClickCitation = onClickCitation)
-                        } else {
-                            HtmlInlineGroup(nodes = group, onClickCitation = onClickCitation)
-                        }
-                    }
                 }
-            }
 
-            // Nested lists
-            item.children().fastForEach { child ->
-                val tag = child.tagName().lowercase()
-                if (tag == "ul" || tag == "ol") {
-                    HtmlList(
-                        element = child,
-                        ordered = tag == "ol",
-                        onClickCitation = onClickCitation,
-                        level = level + 1,
-                    )
+                // Nested lists
+                item.children().fastForEach { child ->
+                    val tag = child.tagName().lowercase()
+                    if (tag == "ul" || tag == "ol") {
+                        HtmlList(
+                            element = child,
+                            ordered = tag == "ol",
+                            onClickCitation = onClickCitation,
+                            level = level + 1,
+                        )
+                    }
                 }
             }
         }
@@ -1412,6 +1412,7 @@ private fun parseColor(colorString: String): Color? {
             colorString.startsWith("rgba(") -> {
                 val rgba = colorString.removePrefix("rgba(").removeSuffix(")")
                 val values = rgba.split(",").map { it.trim() }
+
                 if (values.size == 4) {
                     val r = values[0].toIntOrNull()
                     val g = values[1].toIntOrNull()
