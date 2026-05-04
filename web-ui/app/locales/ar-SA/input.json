@@ -1,1 +1,94 @@
-{}
+{
+  "mcp": {
+    "title": "MCP",
+    "description": "اختر خوادم MCP المتاحة لهذا المساعد",
+    "update_failed": "فشل تحديث إعدادات MCP",
+    "unnamed_server": "خادم MCP بلا اسم",
+    "tools_enabled": "{{enabled}}/{{total}} أداة مفعّلة",
+    "empty": "لا توجد خوادم MCP متاحة"
+  },
+  "injection": {
+    "title": "الإضافات",
+    "description": "تفعيل الرسائل السريعة وحقن الأوضاع ودفاتر اللور للمساعد الحالي",
+    "update_failed": "فشل تحديث الإضافات",
+    "tab_quickmessages": "رسائل سريعة",
+    "tab_mode": "حقن الوضع",
+    "tab_lorebook": "دفتر اللور",
+    "unnamed_mode": "حقن وضع بلا اسم",
+    "unnamed_lorebook": "دفتر لور بلا اسم",
+    "unnamed_quickmessage": "رسالة سريعة بلا اسم",
+    "disabled": "معطّل",
+    "empty_mode": "لا توجد حقن أوضاع متاحة",
+    "empty_lorebook": "لا توجد دفاتر لور متاحة",
+    "empty_quickmessages": "لا توجد رسائل سريعة متاحة"
+  },
+  "reasoning": {
+    "title": "التفكير",
+    "description": "ضبط شدة التفكير وميزانيته للمساعد الحالي",
+    "update_failed": "فشل تحديث ميزانية التفكير",
+    "custom_budget": "ميزانية تفكير مخصصة",
+    "custom_budget_placeholder": "أدخل ميزانية الرموز",
+    "invalid_integer": "يرجى إدخال عدد صحيح صالح",
+    "apply": "تطبيق",
+    "examples": "أمثلة: 0 (إيقاف)، -1 (تلقائي)، 1024، 16000، 32000",
+    "presets": {
+      "off": { "label": "إيقاف", "description": "تعطيل التفكير والإجابة مباشرةً." },
+      "auto": { "label": "تلقائي", "description": "دع النموذج يحدد مستوى التفكير تلقائياً." },
+      "low": { "label": "خفيف", "description": "استخدام قدر صغير من التفكير للإجابة." },
+      "medium": { "label": "متوسط", "description": "استخدام قدر أكبر من التفكير للإجابة." },
+      "high": { "label": "مكثف", "description": "استخدام تفكير موسع للإجابة." },
+      "xhigh": { "label": "أقصى", "description": "استخدام أقصى قدر من التفكير للإجابة." }
+    }
+  },
+  "model_list": {
+    "ability_tool": "أدوات",
+    "ability_reasoning": "تفكير",
+    "select_model": "اختر نموذجاً",
+    "switch_model_failed": "فشل تبديل النموذج",
+    "update_favorites_failed": "فشل تحديث المفضلة",
+    "title": "اختر نموذجاً",
+    "description": "تبديل نموذج الذكاء الاصطناعي المستخدم من قِبل هذا المساعد",
+    "search_placeholder": "البحث في النماذج",
+    "empty": "لا توجد نماذج متاحة",
+    "favorites": "المفضلة"
+  },
+  "search": {
+    "default_service_label": "بحث",
+    "update_search_failed": "فشل تحديث البحث على الويب",
+    "switch_service_failed": "فشل تبديل خدمة البحث",
+    "update_builtin_failed": "فشل تحديث البحث المدمج",
+    "title": "البحث على الويب",
+    "description": "ضبط البحث على الويب وخدمات البحث",
+    "builtin_title": "بحث النموذج المدمج",
+    "builtin_desc": "استخدام قدرة البحث الأصلية للنموذج",
+    "web_title": "البحث على الويب",
+    "status_enabled": "مفعّل",
+    "status_disabled": "معطّل",
+    "unknown": "غير معروف",
+    "empty": "لا توجد خدمات بحث متاحة",
+    "builtin_notice": "البحث المدمج مفعّل. إعدادات خدمة البحث لن تؤثر."
+  },
+  "chat": {
+    "attachment_image": "صورة",
+    "attachment_video": "فيديو",
+    "attachment_audio": "صوت",
+    "attachment_file": "مرفق",
+    "quick_message_default_title": "رسالة سريعة",
+    "upload_failed": "فشل الرفع",
+    "send_failed": "فشل الإرسال",
+    "drop_to_upload": "أفلت الملفات هنا للرفع",
+    "editing_tip": "تعديل الرسالة، الإرسال سينشئ فرعاً جديداً",
+    "cancel_edit": "إلغاء التعديل",
+    "delete_attachment_failed": "فشل حذف المرفق",
+    "upload_image": "رفع صورة",
+    "upload_document": "رفع مستند",
+    "export_conversation": "تصدير المحادثة كـ Markdown",
+    "export_conversation_with_reasoning": "تصدير المحادثة كـ Markdown (مع التفكير)",
+    "unsupported_file_skipped": "تم تخطي {{count}} ملف(ات) بسبب صيغة غير مدعومة",
+    "placeholder_ready": "اكتب رسالة...",
+    "placeholder_not_ready": "يرجى اختيار محادثة أولاً",
+    "send_hint_enter": "اضغط Enter للإرسال، Shift + Enter لسطر جديد",
+    "send_hint_newline": "اضغط Shift + Enter للإرسال، Enter لسطر جديد",
+    "long_text_as_file": "تم تحويل النص الطويل إلى مرفق ملف"
+  }
+}
