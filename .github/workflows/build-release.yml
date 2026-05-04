@@ -2,7 +2,7 @@ name: Build Release APK
 
 on:
   push:
-    branches: [ master, main, stable-v0.6 ]
+    branches: [ master, main, stable-v0.6, stable-v0.6-rtl-2.1.12 ]
   workflow_dispatch:
 
 jobs:
@@ -12,12 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Patch Version and Build Config
+      - name: Patch Build Config
         run: |
-          # Update version to differentiate RTL build
-          sed -i 's/versionCode = 147/versionCode = 600/' app/build.gradle.kts
-          sed -i 's/versionName = "0.6.0"/versionName = "0.6.0-rtl"/' app/build.gradle.kts
-          
           # Force debug signing for the release build to bypass missing keystore
           sed -i 's/signingConfig = signingConfigs.getByName("release")/signingConfig = signingConfigs.getByName("debug")/' app/build.gradle.kts
 
