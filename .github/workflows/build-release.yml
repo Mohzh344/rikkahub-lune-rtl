@@ -12,6 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Patch Version and Build Config
+        run: |
+          # Update version to differentiate RTL build
+          sed -i 's/versionCode = 147/versionCode = 600/' app/build.gradle.kts
+          sed -i 's/versionName = "0.6.0"/versionName = "0.6.0-rtl"/' app/build.gradle.kts
+          
+          # Force debug signing for the release build to bypass missing keystore
+          sed -i 's/signingConfig = signingConfigs.getByName("release")/signingConfig = signingConfigs.getByName("debug")/' app/build.gradle.kts
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
@@ -55,19 +64,13 @@ jobs:
           }
           JSON
 
-      - name: Use debug signing for release build
-        run: |
-          if [ -f app/build.gradle.kts ]; then
-            sed -i 's/signingConfig = signingConfigs.getByName("release")/signingConfig = signingConfigs.getByName("debug")/' app/build.gradle.kts
-          fi
-
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Build Release APK
         run: ./gradlew assembleRelease
 
-      - name: Sign Release APK
+      - name: Sign and Align APK
         run: |
           wget -q https://github.com/patrickfav/uber-apk-signer/releases/download/v1.3.0/uber-apk-signer-1.3.0.jar
           java -jar uber-apk-signer-1.3.0.jar -a app/build/outputs/apk/release/ --allowResign
@@ -75,5 +78,5 @@ jobs:
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: RikkaHub-Lune-RTL-Arabic-ARM64
-          path: app/build/outputs/apk/release/*arm64-v8a*-aligned-debugSigned.apk
+          name: RikkaHub-Lune-RTL-Arabic
+          path: app/build/outputs/apk/release/*-aligned-debugSigned.apk
