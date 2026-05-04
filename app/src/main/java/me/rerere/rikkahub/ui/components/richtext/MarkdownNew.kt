@@ -157,7 +157,6 @@ fun MarkdownNew(
             }
         }
     }
-    } // end CompositionLocalProvider
 }
 
 // ---- Node dispatching ----
@@ -434,7 +433,6 @@ private fun HtmlList(
             }
         }
     }
-    } // end CompositionLocalProvider
 }
 
 @Composable
@@ -535,7 +533,6 @@ private fun HtmlListItem(
             }
         }
     }
-    } // end CompositionLocalProvider
 }
 
 @Composable
@@ -672,7 +669,6 @@ private fun HtmlDetails(element: Element, onClickCitation: (String) -> Unit) {
             }
         }
     }
-    } // end CompositionLocalProvider
 }
 
 @Composable
@@ -825,7 +821,6 @@ private fun HtmlInlineAsComposable(node: Node, onClickCitation: (String) -> Unit
             }
         }
     }
-    } // end CompositionLocalProvider
 }
 
 // ---- Inline AnnotatedString building ----
