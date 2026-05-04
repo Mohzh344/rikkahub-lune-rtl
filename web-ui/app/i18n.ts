@@ -6,13 +6,18 @@ import enUSInput from "./locales/en-US/input.json";
 import enUSMarkdown from "./locales/en-US/markdown.json";
 import enUSMessage from "./locales/en-US/message.json";
 import enUSPage from "./locales/en-US/page.json";
+import arSACommon from "./locales/ar-SA/common.json";
+import arSAInput from "./locales/ar-SA/input.json";
+import arSAMarkdown from "./locales/ar-SA/markdown.json";
+import arSAMessage from "./locales/ar-SA/message.json";
+import arSAPage from "./locales/ar-SA/page.json";
 import zhCNCommon from "./locales/zh-CN/common.json";
 import zhCNInput from "./locales/zh-CN/input.json";
 import zhCNMarkdown from "./locales/zh-CN/markdown.json";
 import zhCNMessage from "./locales/zh-CN/message.json";
 import zhCNPage from "./locales/zh-CN/page.json";
 
-const SUPPORTED_LANGUAGES = ["zh-CN", "en-US"] as const;
+const SUPPORTED_LANGUAGES = ["zh-CN", "en-US", "ar-SA"] as const;
 
 function getInitialLanguage(): (typeof SUPPORTED_LANGUAGES)[number] {
   if (typeof window === "undefined") {
