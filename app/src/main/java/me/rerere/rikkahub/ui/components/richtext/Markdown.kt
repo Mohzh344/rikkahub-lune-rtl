@@ -90,6 +90,16 @@ import org.intellij.markdown.flavours.gfm.GFMElementTypes
 import org.intellij.markdown.flavours.gfm.GFMFlavourDescriptor
 import org.intellij.markdown.flavours.gfm.GFMTokenTypes
 import org.intellij.markdown.parser.MarkdownParser
+// RTL Support: First Strong Character algorithm
+internal fun isRtlText(text: String): Boolean {
+    for (char in text) {
+        val dir = Character.getDirectionality(char)
+        if (dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT || dir == Character.DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC) return true
+        if (dir == Character.DIRECTIONALITY_LEFT_TO_RIGHT) return false
+    }
+    return false
+}
+
 
 private val flavour by lazy {
     GFMFlavourDescriptor(
@@ -1113,7 +1123,8 @@ private fun Paragraph(
             softWrap = true,
             overflow = TextOverflow.Visible,
             style = LocalTextStyle.current.copy(
-                lineHeight = if (hasInlineMath && enableLatexRendering) TextUnit.Unspecified else LocalTextStyle.current.lineHeight
+                lineHeight = if (hasInlineMath && enableLatexRendering) TextUnit.Unspecified else LocalTextStyle.current.lineHeight,
+                textDirection = if (isRtlText(annotatedString.text)) androidx.compose.ui.text.style.TextDirection.Rtl else androidx.compose.ui.text.style.TextDirection.ContentOrLtr
             )
         )
     }

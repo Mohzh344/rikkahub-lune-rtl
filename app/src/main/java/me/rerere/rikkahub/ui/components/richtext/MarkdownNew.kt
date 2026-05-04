@@ -157,6 +157,7 @@ fun MarkdownNew(
             }
         }
     }
+    } // end CompositionLocalProvider
 }
 
 // ---- Node dispatching ----
@@ -374,6 +375,7 @@ private fun HtmlParagraphContent(
                 TextUnit.Unspecified
             else
                 textStyle.lineHeight,
+            textDirection = if (isRtlText(annotatedString.text)) androidx.compose.ui.text.style.TextDirection.Rtl else androidx.compose.ui.text.style.TextDirection.ContentOrLtr,
         ),
     )
 }
@@ -432,6 +434,7 @@ private fun HtmlList(
             }
         }
     }
+    } // end CompositionLocalProvider
 }
 
 @Composable
@@ -444,6 +447,9 @@ private fun HtmlListItem(
     val isTaskItem = item.hasClass("task-list-item")
     val checkboxInput = item.selectFirst("input[type=checkbox]")
     val isChecked = checkboxInput?.hasAttr("checked") == true
+    val isRtl = isRtlText(item.text())
+    val layoutDir = if (isRtl) androidx.compose.ui.unit.LayoutDirection.Rtl else androidx.compose.ui.unit.LayoutDirection.Ltr
+    androidx.compose.runtime.CompositionLocalProvider(androidx.compose.ui.platform.LocalLayoutDirection provides layoutDir) {
 
     HtmlStyledElement(element = item) {
         Column {
@@ -529,6 +535,7 @@ private fun HtmlListItem(
             }
         }
     }
+    } // end CompositionLocalProvider
 }
 
 @Composable
@@ -665,6 +672,7 @@ private fun HtmlDetails(element: Element, onClickCitation: (String) -> Unit) {
             }
         }
     }
+    } // end CompositionLocalProvider
 }
 
 @Composable
@@ -733,7 +741,14 @@ private fun HtmlInlineGroup(nodes: List<Node>, onClickCitation: (String) -> Unit
     }
 
     if (annotatedString.isNotEmpty()) {
-        Text(text = annotatedString, inlineContent = inlineContents)
+        val isRtl = isRtlText(annotatedString.text)
+        Text(
+            text = annotatedString,
+            inlineContent = inlineContents,
+            style = LocalTextStyle.current.copy(
+                textDirection = if (isRtl) androidx.compose.ui.text.style.TextDirection.Rtl else androidx.compose.ui.text.style.TextDirection.ContentOrLtr,
+            ),
+        )
     }
 }
 
@@ -810,6 +825,7 @@ private fun HtmlInlineAsComposable(node: Node, onClickCitation: (String) -> Unit
             }
         }
     }
+    } // end CompositionLocalProvider
 }
 
 // ---- Inline AnnotatedString building ----
