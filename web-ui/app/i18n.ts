@@ -25,12 +25,14 @@ function getInitialLanguage(): (typeof SUPPORTED_LANGUAGES)[number] {
   }
 
   const fromStorage = window.localStorage.getItem("lang");
-  if (fromStorage === "zh-CN" || fromStorage === "en-US") {
-    return fromStorage;
+  if (fromStorage === "zh-CN" || fromStorage === "en-US" || fromStorage === "ar-SA") {
+    return fromStorage as (typeof SUPPORTED_LANGUAGES)[number];
   }
 
   const browserLanguage = window.navigator.language;
-  return browserLanguage.startsWith("zh") ? "zh-CN" : "en-US";
+  if (browserLanguage.startsWith("zh")) return "zh-CN";
+  if (browserLanguage.startsWith("ar")) return "ar-SA";
+  return "en-US";
 }
 
 void i18n.use(initReactI18next).init({
@@ -48,6 +50,13 @@ void i18n.use(initReactI18next).init({
       markdown: enUSMarkdown,
       message: enUSMessage,
       page: enUSPage,
+    },
+    "ar-SA": {
+      common: arSACommon,
+      input: arSAInput,
+      markdown: arSAMarkdown,
+      message: arSAMessage,
+      page: arSAPage,
     },
   },
   lng: getInitialLanguage(),

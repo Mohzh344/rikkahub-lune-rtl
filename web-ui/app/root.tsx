@@ -25,6 +25,7 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+  const { i18n } = useTranslation();
   return (
     <html lang={i18n.language} dir={i18n.language === "ar-SA" ? "rtl" : "ltr"}>
       <head>
