@@ -52,7 +52,7 @@ jobs:
             "client": [{
               "client_info": {
                 "mobilesdk_app_id": "1:123456789000:android:abcdef1234567890",
-                "android_client_info": { "package_name": "me.rerere.rikkahub" }
+                "android_client_info": { "package_name": "me.rerere.rikkahub.ywxk" }
               },
               "oauth_client": [],
               "api_key": [{ "current_key": "AIzaSyDummy_Key_For_CI_Build_Only" }],
